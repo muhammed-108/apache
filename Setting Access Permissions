@@ -1,0 +1,45 @@
+Step 1 Modify the configuration file.
+Add the following content to the configuration of the real directory of test2 in the
+source.conf file:
+<RequireAll>
+ Require all granted
+ Require not ip 192.168.38.1
+</RequireAll>
+
+
+
+Step 2 Verify the configurations.
+Reload the Apache configurations and access the directory using the browser of the test
+machine. The following information is displayed.
+
+
+Step 3 Use the .htaccess file to set the permissions.
+Comment out the configuration added in step 1 in the source.conf file and add
+AllowOverride All, as shown in the following figure
+Create an .htaccess file in /home/source/test and enter the following configurations:
+<RequireAll>
+ Require all granted
+ Require not ip 192.168.38.1
+</RequireAll>
+
+
+shti tr
+
+Step 1 Create an account.
+Run the following command to create a .passwd file in the directory where the resource
+is located:
+htpasswd -cb .passwd test Huawei@123
+
+
+
+Step 2 Add configurations.
+Add the following configurations to the .htaccess file:
+AuthType Basic
+AuthName "http test"
+AuthUserFile "/home/source/test/.passwd"
+Require user test
+
+
+Step 3 Verify the configurations.
+Reload the Apache configurations and use a browser to access EIP:81/test2/. The system
+prompts you to enter the authentication information, as shown in the following figure
