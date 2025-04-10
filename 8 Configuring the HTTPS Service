@@ -1,0 +1,30 @@
+Step 1 Install the dependent module.
+Run the following command to install mod_ssl:
+yum install -y mod_ssl
+
+
+Step 2 Create a self-signed certificate.
+Run the following commands to create a private key:
+mkdir ca
+cd ca
+openssl genrsa -out ca.key 2048
+Use the private key to generate a CA certificate.
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout ca.key -x509 -days 3650 -out ca.crt
+
+Generate a request file using the private key and CA certificate.
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout www.test1.com.key -out www.test1.com.csr
+Issue a certificate to the server.
+openssl x509 -req -days 36500 -in www.test1.com.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out
+www.test1.com.crt
+
+Step 3 Specify a certificate file.
+Run the following command to open the SSL configuration file:
+vim /etc/httpd/conf.d/ssl.conf
+
+Add a static resolution entry to the client to resolve www.test1.com to the EIP of
+Server01.
+Enter https://www.test1.com in the address box of the browser. The following page is
+displayed.
+
+Click Advanced and select Proceed to www.test1.com (unsafe). The following page is
+displayed.
