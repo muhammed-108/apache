@@ -1,0 +1,60 @@
+for checking the port it's
+ 
+ss -lnp | grep 80
+
+
+Drustkrdni porty jya 
+
+Create a configuration file port.conf in /etc/httpd/conf.d and add the following content
+to the file:
+Listen 192.168.1.11:81
+
+Bo gorini main file index.html
+
+Create a configuration file source.conf in conf.d and enter the following content:
+DocumentRoot "/home/source"
+
+
+bo pedani hamu permissionek
+
+Add the following content to the source.conf file to grant the access permission on the
+directory:
+<Directory "/home/source">
+ AllowOverride None
+ # Allow open access:
+ Require all granted
+</Directory>
+
+
+agar i small krd ba capital
+
+Add the following content to the source.conf file to change the static page name to
+Index.html:
+DirectoryIndex Index.html
+
+
+bo check module 
+
+httpd -M | grep status
+
+bo zyad krdni modulek ama akay 
+
+
+Add a configuration file module.conf to /etc/httpd/conf.d and add the following
+content:
+<Location /server-status>
+ SetHandler server-status
+ Order deny,allow
+ Deny from all
+ Allow from all
+</Location>
+ExtendedStatus On
+
+
+
+
+Create a keepalived.conf configuration file related to persistent connections
+in the /etc/httpd/conf.d directory and add the following configurations:
+KeepAlive On
+KeepAliveTimeout 20
+MaxKeepAliveRequests 500
