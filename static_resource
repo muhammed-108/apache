@@ -1,0 +1,23 @@
+Step 1 Prepare resources.
+Create a test directory in /home/source, and create files test1 and test2 in test. Enter
+"hello,test1" in test1, and soft link test1 to test2.
+
+
+Step 2 Add configurations.
+Add the following content to /etc/httpd/conf.d/source.conf:
+<Directory "/test">
+ Options Indexes
+ AllowOverride None
+ # Allow open access:
+ Require all granted
+</Directory>
+
+
+Step 3 Verify the configurations.
+Reload the httpd service, enter EIP:81/test in the address box of the browser. The
+following information is displayed
+
+Step 4 Specify static resources by alias.
+Add the following configuration to the source.conf file:
+Alias /test2 "/home/source/test"
+
